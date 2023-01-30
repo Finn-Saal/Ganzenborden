@@ -179,6 +179,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1016034503}
     - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
+      propertyPath: curLoc
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
       propertyPath: SpeelBord
       value: 
       objectReference: {fileID: 0}
