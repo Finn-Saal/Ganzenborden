@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -177,7 +177,7 @@ PrefabInstance:
     - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
       propertyPath: board
       value: 
-      objectReference: {fileID: 1638075968}
+      objectReference: {fileID: 1016034503}
     - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
       propertyPath: SpeelBord
       value: 
@@ -366,6 +366,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1016034503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1283020339979151676, guid: 1e889dcf52435134d8e338dc1419e7af, type: 3}
+  m_PrefabInstance: {fileID: 1240737314}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1240737314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -423,8 +428,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e889dcf52435134d8e338dc1419e7af, type: 3}
---- !u!1 &1638075968 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1778676992007759634, guid: 1e889dcf52435134d8e338dc1419e7af, type: 3}
-  m_PrefabInstance: {fileID: 1240737314}
-  m_PrefabAsset: {fileID: 0}
