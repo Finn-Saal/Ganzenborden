@@ -22,12 +22,16 @@ public class PlayerMovement : MonoBehaviour
 
         if(DiceCheckZoneScript.diceStat == true)
         {
-            curLoc = curLoc + DiceNumberTextScript.diceNumber;
+            curLoc += DiceNumberTextScript.diceNumber;
             DiceCheckZoneScript.diceStat = false;
         }
-
+        if(curLoc <=63){
         FindPosition();
         transform.GetChild(1).position = positionToGo;
+        }
+        else{
+            curLoc = 63;
+        }
     }
 
     //Defines position of player
