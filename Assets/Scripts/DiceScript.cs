@@ -6,6 +6,7 @@ public class DiceScript : MonoBehaviour {
 
 	static Rigidbody rb;
 	public static Vector3 diceVelocity;
+	public static bool spaceStat = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +26,7 @@ public class DiceScript : MonoBehaviour {
 			transform.rotation = Quaternion.identity;
 			rb.AddForce (transform.up * 500);
 			rb.AddTorque (dirX, dirY, dirZ);
+			spaceStat = true;
 		}
 	}
 }

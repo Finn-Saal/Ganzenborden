@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33831978, g: 0.4749133, b: 0.73417354, a: 1}
+  m_IndirectSpecularColor: {r: 0.33831978, g: 0.2847027, b: 0.3275626, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -180,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 1016034503}
     - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
       propertyPath: curLoc
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
       propertyPath: SpeelBord
@@ -304,7 +304,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.990566, g: 0.7829672, b: 0.51771086, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30

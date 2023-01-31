@@ -5,7 +5,8 @@ using UnityEngine;
 public class DiceCheckZoneScript : MonoBehaviour {
 
 	Vector3 diceVelocity;
-
+	public static bool diceStat = false;
+	
 	// Update is called once per frame
 	void FixedUpdate () {
 		diceVelocity = DiceScript.diceVelocity;
@@ -35,6 +36,10 @@ public class DiceCheckZoneScript : MonoBehaviour {
 				DiceNumberTextScript.diceNumber = 1;
 				break;
 			}
+		if(DiceScript.spaceStat == true){
+			diceStat = true;
+			DiceScript.spaceStat = false;
+		}
 		}
 	}
 }
