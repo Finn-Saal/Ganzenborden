@@ -9,11 +9,17 @@ public class PlayerMovement : MonoBehaviour
     public GameObject board;
     public Vector3 positionToGo;
     public int playerMax = 3;
-    public int curLoc = 1;
+    public int[] curLoc = {1,1,1,1};
     
     // Start is called before the first frame update
     void Start()
     {
+        for(int i = 0; i<curLoc.Length; i++)
+        {
+            transform.GetChild(i).position = board.transform.Find("Vakje " + 1).position;
+        }
+        
+        
     }
 
     // Update is called once per frame
@@ -22,9 +28,9 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(board.transform.Find("Vakje " + curLoc).position);
         if(DiceCheckZoneScript.diceStat == true)
         {
-            curLoc += DiceNumberTextScript.diceNumber;
+            curLoc[playNum] += DiceNumberTextScript.diceNumber;
             DiceCheckZoneScript.diceStat = false;
-            if(playNum <= playerMax)
+            if(playNum < playerMax)
             {
                 playNum++;
             }
@@ -35,12 +41,12 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //makes sure tile number cant go over 63 and moves correct player to new position
-        if(curLoc <= 63){
+        if(curLoc[playNum] <= 63){
         FindPosition();
         transform.GetChild(playNum).position = positionToGo;
         }
         else{
-            curLoc = 63;
+            curLoc[playNum] = 63;
         }
     }
 
@@ -52,6 +58,6 @@ public class PlayerMovement : MonoBehaviour
     //Defines position of player
     void FindPosition()
     {
-        positionToGo = board.transform.Find("Vakje " + curLoc).position; 
+        positionToGo = board.transform.Find("Vakje " + curLoc[playNum]).position; 
     }   
 }
