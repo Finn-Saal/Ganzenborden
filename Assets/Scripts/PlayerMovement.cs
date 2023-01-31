@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     //Defines position of player
     void FindPosition()
     {
-        positionToGo = board.transform.GetChild(curLoc[playNum]-1).Find(tileLoc).position; 
+        positionToGo = board.transform.GetChild(curLoc[playNum]-1).Find(tileLoc).GetChild(0).position; 
     }   
 
     void NextPlayer()
