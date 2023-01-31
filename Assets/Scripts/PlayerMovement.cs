@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         FindPosition();
-        transform.position = positionToGo;
+        transform.GetChild(1).position = positionToGo;
     }
 
     //Defines position of player
