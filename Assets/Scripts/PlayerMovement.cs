@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 positionCheck;
     public int playerMax = 3;
     public int[] curLoc = {1,1,1,1};
+    public string tileLoc = null;
     
     // Start is called before the first frame update
     void Start()
@@ -49,17 +50,29 @@ public class PlayerMovement : MonoBehaviour
         {
             NextPlayer();
         }
+        SubLocation();
     }
 
-    void PlayerTurn()
+    void SubLocation()
     {
-        
+        if(playNum==0){
+            tileLoc="A";
+        }
+        else if(playNum==1){
+            tileLoc="B";
+        }
+        else if(playNum==2){
+            tileLoc="C";
+        }
+        else if(playNum==3){
+            tileLoc="D";
+        }
     }
 
     //Defines position of player
     void FindPosition()
     {
-        positionToGo = board.transform.Find("Vakje " + curLoc[playNum]).position; 
+        positionToGo = board.transform.GetChild(curLoc[playNum]-1).Find(tileLoc).position; 
     }   
 
     void NextPlayer()
