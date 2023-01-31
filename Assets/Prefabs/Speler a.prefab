@@ -342,9 +342,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961ab0fabb8a8ae428c760ad7a0acec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curLoc: 1
   board: {fileID: 0}
   positionToGo: {x: 0, y: 0, z: 0}
+  curLoc: 
 --- !u!1 &8342068334328679947
 GameObject:
   m_ObjectHideFlags: 0
