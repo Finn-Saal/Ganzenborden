@@ -183,8 +183,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
-      propertyPath: SpeelBord
-      value: 
+      propertyPath: curLoc.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
+      propertyPath: curLoc.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
+      propertyPath: curLoc.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
+      propertyPath: curLoc.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155251792236076373, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
+      propertyPath: curLoc.Array.data[3]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6750727266600394345, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
       propertyPath: m_Name
