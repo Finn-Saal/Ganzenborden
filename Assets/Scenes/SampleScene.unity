@@ -462,6 +462,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1136869767796365754, guid: 1e889dcf52435134d8e338dc1419e7af, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 1778676992007759634, guid: 1e889dcf52435134d8e338dc1419e7af, type: 3}
       propertyPath: m_Name
       value: TableTop
