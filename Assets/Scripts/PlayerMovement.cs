@@ -15,10 +15,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 endPosition;
     private Vector3 startPosition;
-    private float desiredDuration = 2f;
+    private float desiredDuration = 5f;
     public static float elapsedTime;
 
     public float percentageComplete;
+    public float blend;
     
     // Start is called before the first frame update
     void Start()
@@ -45,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
         positionCheck = transform.GetChild(playNum).position;
         if(DiceCheckZoneScript.diceStat == true)
         {
-            
+            //defines the starting position of player
             FindPosition();
             startPosition = positionToGo; 
 
@@ -57,8 +58,12 @@ public class PlayerMovement : MonoBehaviour
         //makes sure tile number cant go over 63 and moves correct player to new position
         if(curLoc[playNum] <= 63){
             
+            //defines time for the lerp function and smoothens the animation
             elapsedTime += Time.deltaTime;
             percentageComplete = elapsedTime / desiredDuration;
+            blend = Mathf.SmoothStep(0, 1, percentageComplete);
+
+            //stops percentageComplete from going above 1
             if(percentageComplete >= 1)
             {
                 percentageComplete = 1;
@@ -67,7 +72,8 @@ public class PlayerMovement : MonoBehaviour
             FindPosition();
             endPosition = positionToGo;
 
-            transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, percentageComplete);
+            //lerps player to new loacation
+            transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, blend);
 
         }
         else
@@ -75,7 +81,8 @@ public class PlayerMovement : MonoBehaviour
             curLoc[playNum] = 63;
         }
 
-        if(positionCheck != transform.GetChild(playNum).position && percentageComplete == 1)
+        //adds 1 to player number after round is finished
+        if(positionCheck != transform.GetChild(playNum).position && blend == 1)
         {
             NextPlayer();
         }
