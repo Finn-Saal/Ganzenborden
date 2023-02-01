@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.GetChild(i).position = board.transform.Find("Vakje " + 1).position;
             curLoc[i] = 1;
-            Debug.Log(curLoc[i]);
         }
        // Debug.Log(curLoc[1]);
        for(int i = playerMax+1; i<=3; i++)
