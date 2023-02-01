@@ -38,6 +38,7 @@ public class DiceCheckZoneScript : MonoBehaviour {
 			}
 		if(DiceScript.spaceStat == true){
 			diceStat = true;
+			PlayerMovement.elapsedTime = 0;
 			DiceScript.spaceStat = false;
 		}
 		}

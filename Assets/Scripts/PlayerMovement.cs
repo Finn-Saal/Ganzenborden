@@ -16,7 +16,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 endPosition;
     private Vector3 startPosition;
     private float desiredDuration = 2f;
-    private float elapsedTime;
+    public static float elapsedTime;
+
+    public float percentageComplete;
     
     // Start is called before the first frame update
     void Start()
@@ -56,7 +58,11 @@ public class PlayerMovement : MonoBehaviour
         if(curLoc[playNum] <= 63){
             
             elapsedTime += Time.deltaTime;
-            float percentageComplete = elapsedTime / desiredDuration;
+            percentageComplete = elapsedTime / desiredDuration;
+            if(percentageComplete >= 1)
+            {
+                percentageComplete = 1;
+            }
 
             FindPosition();
             endPosition = positionToGo;
@@ -69,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
             curLoc[playNum] = 63;
         }
 
-        if(positionCheck != transform.GetChild(playNum).position)
+        if(positionCheck != transform.GetChild(playNum).position && percentageComplete == 1)
         {
             NextPlayer();
         }
