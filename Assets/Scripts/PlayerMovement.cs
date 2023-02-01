@@ -9,8 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject board;
     public Vector3 positionToGo;
     public Vector3 positionCheck;
-    public int playerMax = 3;
-    public int[] curLoc = {1,1,1,1};
+    public static int playerMax;
+    public int[] curLoc = new int[playerMax];
     public string tileLoc = null;
     
     // Start is called before the first frame update
@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
         for(int i = 0; i<curLoc.Length; i++)
         {
             transform.GetChild(i).position = board.transform.Find("Vakje " + 1).position;
+            curLoc[i]=1;
         }
         
         
