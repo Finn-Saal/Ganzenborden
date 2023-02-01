@@ -24,10 +24,10 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log(curLoc[i]);
         }
        // Debug.Log(curLoc[1]);
-       for(int i = playerMax+1; i<=4; i++)
+       for(int i = playerMax+1; i<=3; i++)
         {
             Debug.Log(i);
-            GameObject.Find(i).SetActive(false);
+            GameObject.Find(i.ToString()).SetActive(false);
         } 
     }
 
