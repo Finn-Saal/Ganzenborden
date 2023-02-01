@@ -12,6 +12,11 @@ public class PlayerMovement : MonoBehaviour
     public static int playerMax = 2;
     public static int[] curLoc = new int[playerMax+1];
     public string tileLoc = null;
+
+    private Vector3 endPosition;
+    private Vector3 startPosition;
+    private float desiredDuration = 2f;
+    private float elapsedTime;
     
     // Start is called before the first frame update
     void Start()
@@ -32,10 +37,16 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        
         //Debug.Log(board.transform.Find("Vakje " + curLoc).position);
         positionCheck = transform.GetChild(playNum).position;
         if(DiceCheckZoneScript.diceStat == true)
         {
+            
+            FindPosition();
+            startPosition = positionToGo; 
+
             curLoc[playNum] += DiceNumberTextScript.diceNumber;
             DiceCheckZoneScript.diceStat = false;
             
@@ -43,8 +54,15 @@ public class PlayerMovement : MonoBehaviour
         
         //makes sure tile number cant go over 63 and moves correct player to new position
         if(curLoc[playNum] <= 63){
-        FindPosition();
-        transform.GetChild(playNum).position = positionToGo;
+            
+            elapsedTime += Time.deltaTime;
+            float percentageComplete = elapsedTime / desiredDuration;
+
+            FindPosition();
+            endPosition = positionToGo;
+
+            transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, percentageComplete);
+
         }
         else
         {
@@ -58,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         SubLocation();
     }
 
+    //assigns sublocation to player to avoid player collision
     void SubLocation()
     {
         if(playNum==0){
