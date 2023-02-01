@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public static int playerMax = 2;
     public static int[] curLoc = new int[playerMax+1];
     public string tileLoc = null;
+    public static bool throwReady = true;
 
     private Vector3 endPosition;
     private Vector3 startPosition;
@@ -85,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         if(positionCheck != transform.GetChild(playNum).position && blend == 1)
         {
             NextPlayer();
+            throwReady = true;
         }
         SubLocation();
     }
