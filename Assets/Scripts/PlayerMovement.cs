@@ -9,20 +9,26 @@ public class PlayerMovement : MonoBehaviour
     public GameObject board;
     public Vector3 positionToGo;
     public Vector3 positionCheck;
-    public static int playerMax;
-    public int[] curLoc = new int[playerMax];
+    public static int playerMax = 2;
+    public static int[] curLoc = new int[playerMax+1];
     public string tileLoc = null;
     
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i<curLoc.Length; i++)
+        //Debug.Log(playerMax);
+        for(int i = 0; i<=playerMax; i++)
         {
             transform.GetChild(i).position = board.transform.Find("Vakje " + 1).position;
-            curLoc[i]=1;
+            curLoc[i] = 1;
+            Debug.Log(curLoc[i]);
         }
-        
-        
+       // Debug.Log(curLoc[1]);
+       for(int i = playerMax+1; i<=4; i++)
+        {
+            Debug.Log(i);
+            GameObject.Find(i).SetActive(false);
+        } 
     }
 
     // Update is called once per frame
