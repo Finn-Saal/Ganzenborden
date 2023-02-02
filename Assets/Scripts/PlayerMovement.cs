@@ -91,7 +91,6 @@ public class PlayerMovement : MonoBehaviour
             DiceScript.throwReady = true;
         }
         SubLocation();
-        Debug.Log(DiceScript.throwReady);
     }
 
     //assigns sublocation to player to avoid player collision
