@@ -6,7 +6,8 @@ public class DiceScript : MonoBehaviour {
 
 	static Rigidbody rb;
 	public static Vector3 diceVelocity;
-	public static bool spaceStat = false;
+	public static bool throwReady = true;
+	public static bool spacePressed = false;
 
 	// Use this for initialization
 	void Start () {
@@ -16,9 +17,9 @@ public class DiceScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		diceVelocity = rb.velocity;
-		if(spaceStat == false) {
-			if (Input.GetKeyDown (KeyCode.Space) && PlayerMovement.throwReady) {
-				PlayerMovement.throwReady = false;
+		if(throwReady == true) {
+			if (Input.GetKeyDown (KeyCode.Space) && throwReady) {
+				throwReady = false;
 				DiceNumberTextScript.diceNumber = 0;
 				float dirX = Random.Range (500, 2000);
 				float dirY = Random.Range (500, 2000);
@@ -27,7 +28,7 @@ public class DiceScript : MonoBehaviour {
 				transform.rotation = Quaternion.identity;
 				rb.AddForce (transform.up * 500);
 				rb.AddTorque (dirX, dirY, dirZ);
-				spaceStat = true;
+				spacePressed = true;
 			}
 		}
 	}

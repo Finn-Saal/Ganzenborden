@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public static int playerMax = 2;
     public static int[] curLoc = new int[playerMax+1];
     public string tileLoc = null;
-    public static bool throwReady = true;
+    public bool roundStarted = false;
 
     private Vector3 endPosition;
     private Vector3 startPosition;
@@ -49,9 +49,10 @@ public class PlayerMovement : MonoBehaviour
         {
             //defines the starting position of player
             FindPosition();
-            startPosition = positionToGo; 
-
+            startPosition = transform.GetChild(playNum).position; 
+            roundStarted = true;
             curLoc[playNum] += DiceNumberTextScript.diceNumber;
+            PlayerMovement.elapsedTime = 0;
             DiceCheckZoneScript.diceStat = false;
             
         }
@@ -83,12 +84,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //adds 1 to player number after round is finished
-        if(positionCheck != transform.GetChild(playNum).position && blend == 1)
+        if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
         {
             NextPlayer();
-            throwReady = true;
+            roundStarted = false;
+            DiceScript.throwReady = true;
         }
         SubLocation();
+        Debug.Log(DiceScript.throwReady);
     }
 
     //assigns sublocation to player to avoid player collision

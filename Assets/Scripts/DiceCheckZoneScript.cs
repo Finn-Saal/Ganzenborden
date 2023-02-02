@@ -5,7 +5,7 @@ using UnityEngine;
 public class DiceCheckZoneScript : MonoBehaviour {
 
 	Vector3 diceVelocity;
-	public static bool diceStat = false;
+	public static bool diceStat = false;	//check if dice has stopped rolling in the current round
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -36,10 +36,9 @@ public class DiceCheckZoneScript : MonoBehaviour {
 				DiceNumberTextScript.diceNumber = 1;
 				break;
 			}
-		if(DiceScript.spaceStat == true){
+		if(DiceScript.throwReady == false && DiceScript.spacePressed){
 			diceStat = true;
-			PlayerMovement.elapsedTime = 0;
-			DiceScript.spaceStat = false;
+			DiceScript.spacePressed = false;	
 		}
 		}
 	}
