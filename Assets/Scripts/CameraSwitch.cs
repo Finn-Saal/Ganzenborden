@@ -11,10 +11,12 @@ public class CameraSwitch : MonoBehaviour
     public GameObject cameraD;
 
     AudioListener cameraMainAudioLis;
-    //AudioListener cameraMainALis;
-    //AudioListener cameraMainBLis;
-    //AudioListener cameraMainCLis;
-    //AudioListener cameraMainDLis;
+    AudioListener cameraMainALis;
+    AudioListener cameraMainBLis;
+    AudioListener cameraMainCLis;
+    AudioListener cameraMainDLis;
+
+    public int cameraPositionCounter = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -25,40 +27,38 @@ public class CameraSwitch : MonoBehaviour
         //cameraBAudioLis = cameraB.GetComponent<AudioListener>();
         //cameraCAudioLis = cameraC.GetComponent<AudioListener>();
         //cameraDAudioLis = cameraD.GetComponent<AudioListener>();
+
+        //sets start camera
+        cameraMain.SetActive(true);
+        cameraMainAudioLis.enabled = true;
+        cameraA.SetActive(false);
+        //cameraAAudioLis.enabled = false;
+        cameraB.SetActive(false);
+        //cameraBAudioLis.enabled = false;
+        cameraC.SetActive(false);
+        //cameraCAudioLis.enabled = false;
+        cameraD.SetActive(false);
+        //cameraDAudioLis.enabled = false;
     }
 
     // Update is called once per frame 
     void Update()
     {
-        SwitchCamera();
-    }
-
-    //changes camera with keypress
-    void SwitchCamera()
-    {
-        if(Input.GetKeyDown(KeyCode.C))
+        //SwitchCamera();
+        if(PlayerMovement.roundStarted)
         {
-            CameraChangeCounter();
+            cameraPositionChange(PlayerMovement.playNum + 1);
         }
-    }
-
-    //camera counter
-    void CameraChangeCounter()
-    {
-        int cameraPositionCounter = PlayerPrefs.GetInt("CameraPosition");
-        cameraPositionCounter++;
-        cameraPositionChange(cameraPositionCounter);
+        else if(!PlayerMovement.roundStarted)
+        {
+            cameraPositionChange(0);
+        }
     }
 
     void cameraPositionChange(int camPosition)
     {
-        //resets camposition to 1 when cycle complete
-        if(camPosition > PlayerMovement.playerMax + 1)
-        {
-            camPosition = 0;
-        }
+        
 
-        PlayerPrefs.SetInt("CameraPosition", camPosition);
         //sets camera and activates audio listener
         if(camPosition == 0)
         {
@@ -83,7 +83,7 @@ public class CameraSwitch : MonoBehaviour
             cameraB.SetActive(false);
             //cameraBAudioLis.enabled = false;
             cameraC.SetActive(false);
-           // cameraCAudioLis.enabled = false;
+            //cameraCAudioLis.enabled = false;
             cameraD.SetActive(false);
             //cameraDAudioLis.enabled = false;
         }

@@ -5,14 +5,14 @@ using System.Dynamic;
 
 public class PlayerMovement : MonoBehaviour
 { 
-    public int playNum = 0; //defines the player that rolls dice starting with player 0
+    public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public Vector3 positionToGo;
     public Vector3 positionCheck;
     public static int playerMax = 2;
     public static int[] curLoc = {1,1,1,1};
     public string tileLoc = null;
-    public bool roundStarted = false;
+    public static bool roundStarted = false;
 
     private Vector3 endPosition;
     private Vector3 startPosition;
