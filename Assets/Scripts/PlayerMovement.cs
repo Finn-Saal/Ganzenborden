@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 positionToGo;
     public Vector3 positionCheck;
     public static int playerMax = 2;
-    public static int[] curLoc = new int[playerMax+1];
+    public static int[] curLoc = {1,1,1,1};
     public string tileLoc = null;
     public bool roundStarted = false;
 
@@ -25,13 +25,15 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log(playerMax);
+        //alle actieve spelers naar vakje verplaatsten
         for(int i = 0; i<=playerMax; i++)
         {
-            transform.GetChild(i).position = board.transform.Find("Vakje " + 1).position;
+            SubLocation(i);
+            transform.GetChild(i).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
             curLoc[i] = 1;
+            //Debug.Log(curLoc[i]);
         }
-       // Debug.Log(curLoc[1]);
+       //alle nonactieve spelers uitzetten
        for(int i = playerMax+1; i<=3; i++)
         {
             GameObject.Find(i.ToString()).SetActive(false);
@@ -90,22 +92,22 @@ public class PlayerMovement : MonoBehaviour
             roundStarted = false;
             DiceScript.throwReady = true;
         }
-        SubLocation();
+        SubLocation(playNum);
     }
 
     //assigns sublocation to player to avoid player collision
-    void SubLocation()
+    void SubLocation(int i)
     {
-        if(playNum==0){
+        if(i==0){
             tileLoc="A";
         }
-        else if(playNum==1){
+        else if(i==1){
             tileLoc="B";
         }
-        else if(playNum==2){
+        else if(i==2){
             tileLoc="C";
         }
-        else if(playNum==3){
+        else if(i==3){
             tileLoc="D";
         }
     }
