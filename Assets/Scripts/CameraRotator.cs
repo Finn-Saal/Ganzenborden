@@ -20,6 +20,6 @@ public class CameraRotator : MonoBehaviour
 
     void RotateHorizontal()
     {
-        transform.RotateAround(GameObject.Find(PlayerMovement.playNum.ToString()).transform.position, Vector3.up, -(1.9 * DiceNumberTextScript.diceNumber * Time.deltaTime));
+        transform.RotateAround(GameObject.Find(PlayerMovement.playNum.ToString()).transform.position, Vector3.up, -((float)1.9 * (float)DiceNumberTextScript.diceNumber * Time.deltaTime));
     }
 }
