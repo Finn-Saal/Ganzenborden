@@ -11,20 +11,20 @@ public class CameraSwitch : MonoBehaviour
     public GameObject cameraD;
 
     AudioListener cameraMainAudioLis;
-    AudioListener cameraMainALis;
-    AudioListener cameraMainBLis;
-    AudioListener cameraMainCLis;
-    AudioListener cameraMainDLis;
+    //AudioListener cameraMainALis;
+    //AudioListener cameraMainBLis;
+    //AudioListener cameraMainCLis;
+    //AudioListener cameraMainDLis;
     
     // Start is called before the first frame update
     void Start()
     {
         //Get Camera Listeners
         cameraMainAudioLis = cameraMain.GetComponent<AudioListener>();
-        cameraAAudioLis = cameraA.GetComponent<AudioListener>();
-        cameraBAudioLis = cameraB.GetComponent<AudioListener>();
-        cameraCAudioLis = cameraC.GetComponent<AudioListener>();
-        cameraDAudioLis = cameraD.GetComponent<AudioListener>();
+        //cameraAAudioLis = cameraA.GetComponent<AudioListener>();
+        //cameraBAudioLis = cameraB.GetComponent<AudioListener>();
+        //cameraCAudioLis = cameraC.GetComponent<AudioListener>();
+        //cameraDAudioLis = cameraD.GetComponent<AudioListener>();
     }
 
     // Update is called once per frame 
@@ -52,7 +52,8 @@ public class CameraSwitch : MonoBehaviour
 
     void cameraPositionChange(int camPosition)
     {
-        if(camPosition > 4)
+        //resets camposition to 1 when cycle complete
+        if(camPosition > PlayerMovement.playerMax + 1)
         {
             camPosition = 0;
         }
@@ -64,13 +65,13 @@ public class CameraSwitch : MonoBehaviour
             cameraMain.SetActive(true);
             cameraMainAudioLis.enabled = true;
             cameraA.SetActive(false);
-            cameraAAudioLis.enabled = false;
+            //cameraAAudioLis.enabled = false;
             cameraB.SetActive(false);
-            cameraBAudioLis.enabled = false;
+            //cameraBAudioLis.enabled = false;
             cameraC.SetActive(false);
-            cameraCAudioLis.enabled = false;
+            //cameraCAudioLis.enabled = false;
             cameraD.SetActive(false);
-            cameraDAudioLis.enabled = false;
+            //cameraDAudioLis.enabled = false;
         }
 
         if(camPosition == 1)
@@ -78,55 +79,55 @@ public class CameraSwitch : MonoBehaviour
             cameraMain.SetActive(false);
             cameraMainAudioLis.enabled = false;
             cameraA.SetActive(true);
-            cameraAAudioLis.enabled = true;
+            //cameraAAudioLis.enabled = true;
             cameraB.SetActive(false);
-            cameraBAudioLis.enabled = false;
+            //cameraBAudioLis.enabled = false;
             cameraC.SetActive(false);
-            cameraCAudioLis.enabled = false;
+           // cameraCAudioLis.enabled = false;
             cameraD.SetActive(false);
-            cameraDAudioLis.enabled = false;
+            //cameraDAudioLis.enabled = false;
         }
 
-        if(camPosition == 0)
+        if(camPosition == 2)
         {
             cameraMain.SetActive(false);
             cameraMainAudioLis.enabled = false;
             cameraA.SetActive(false);
-            cameraAAudioLis.enabled = false;
+            //cameraAAudioLis.enabled = false;
             cameraB.SetActive(true);
-            cameraBAudioLis.enabled = true;
+            //cameraBAudioLis.enabled = true;
             cameraC.SetActive(false);
-            cameraCAudioLis.enabled = false;
+            //cameraCAudioLis.enabled = false;
             cameraD.SetActive(false);
-            cameraDAudioLis.enabled = false;
+            //cameraDAudioLis.enabled = false;
         }
 
-        if(camPosition == 0)
+        if(camPosition == 3)
         {
             cameraMain.SetActive(false);
             cameraMainAudioLis.enabled = false;
             cameraA.SetActive(false);
-            cameraAAudioLis.enabled = false;
+            //cameraAAudioLis.enabled = false;
             cameraB.SetActive(false);
-            cameraBAudioLis.enabled = false;
+            //cameraBAudioLis.enabled = false;
             cameraC.SetActive(true);
-            cameraCAudioLis.enabled = true;
+            //cameraCAudioLis.enabled = true;
             cameraD.SetActive(false);
-            cameraDAudioLis.enabled = false;
+            //cameraDAudioLis.enabled = false;
         }
 
-        if(camPosition == 0)
+        if(camPosition == 4)
         {
             cameraMain.SetActive(false);
             cameraMainAudioLis.enabled = false;
             cameraA.SetActive(false);
-            cameraAAudioLis.enabled = false;
+            //cameraAAudioLis.enabled = false;
             cameraB.SetActive(false);
-            cameraBAudioLis.enabled = false;
+            //cameraBAudioLis.enabled = false;
             cameraC.SetActive(false);
-            cameraCAudioLis.enabled = false;
+            //cameraCAudioLis.enabled = false;
             cameraD.SetActive(true);
-            cameraDAudioLis.enabled = true;
+            //cameraDAudioLis.enabled = true;
         }
 
     }
