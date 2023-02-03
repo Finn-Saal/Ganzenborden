@@ -9,10 +9,11 @@ public class PlayerMovement : MonoBehaviour
     public GameObject board;
     public Vector3 positionToGo;
     public Vector3 positionCheck;
-    public static int playerMax = 2;
+    public static int playerMax = 3;
     public static int[] curLoc = {1,1,1,1};
     public string tileLoc = null;
     public static bool roundStarted = false;
+    public bool[] FinishReached = {false,false,false,false};
 
     private Vector3 endPosition;
     private Vector3 startPosition;
@@ -30,7 +31,8 @@ public class PlayerMovement : MonoBehaviour
         {
             SubLocation(i);
             transform.GetChild(i).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
-            curLoc[i] = 1;
+            curLoc[i] = 60;
+            FinishReached[i] = false;
             //Debug.Log(curLoc[i]);
         }
        //alle nonactieve spelers uitzetten
@@ -60,37 +62,38 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //makes sure tile number cant go over 63 and moves correct player to new position
-        if(curLoc[playNum] <= 63){
-            
-            //defines time for the lerp function and smoothens the animation
-            elapsedTime += Time.deltaTime;
-            percentageComplete = elapsedTime / desiredDuration;
-            blend = Mathf.SmoothStep(0, 1, percentageComplete);
-
-            //stops percentageComplete from going above 1
-            if(percentageComplete >= 1)
-            {
-                percentageComplete = 1;
-            }
-
-            FindPosition();
-            endPosition = positionToGo;
-
-            //lerps player to new loacation
-            transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, blend);
+        if(curLoc[playNum] < 63){
+            MovePlayer();
+        }
+        else if(curLoc[playNum] == 63)
+        {
+            MovePlayer();
+            FinishReached[playNum] = true;
 
         }
-        else
+        else if(curLoc[playNum] >= 63)
         {
-            curLoc[playNum] = 63;
+            if(FinishReached[playNum] == false)
+            {
+                curLoc[playNum] = 63;
+                MovePlayer();
+                FinishReached[playNum] = true;
+                Debug.Log("hier");
+
+            }
+            else if (FinishReached[playNum])
+            {
+                Debug.Log(playNum);
+                curLoc[playNum] = 63;
+                EndRound();
+                Debug.Log("hoi");
+            }
         }
 
         //adds 1 to player number after round is finished
         if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
         {
-            NextPlayer();
-            roundStarted = false;
-            DiceScript.throwReady = true;
+            EndRound();
         }
         SubLocation(playNum);
     }
@@ -129,4 +132,31 @@ public class PlayerMovement : MonoBehaviour
                 playNum = 0;
             }
     }
+
+    void EndRound()
+    {
+        NextPlayer();
+        roundStarted = false;
+        DiceScript.throwReady = true;
+    }
+
+    void MovePlayer(){
+            //defines time for the lerp function and smoothens the animation
+            elapsedTime += Time.deltaTime;
+            percentageComplete = elapsedTime / desiredDuration;
+            blend = Mathf.SmoothStep(0, 1, percentageComplete);
+
+            //stops percentageComplete from going above 1
+            if(percentageComplete >= 1)
+            {
+                percentageComplete = 1;
+            }
+
+            FindPosition();
+            endPosition = positionToGo;
+
+            //lerps player to new loacation
+            transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, blend);
+    }
 }
+
