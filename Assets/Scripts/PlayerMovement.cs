@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Dynamic;
+using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
@@ -14,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     public string tileLoc = null;
     public static bool roundStarted = false;
     public bool[] finishReached = {false,false,false,false};
+    public bool[] finishCheck = {true, true, true, true};
+    public bool isEqual;
+
 
     private Vector3 endPosition;
     private Vector3 startPosition;
@@ -31,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
         {
             SubLocation(i);
             transform.GetChild(i).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
-            curLoc[i] = 55;
+            curLoc[i] = 59;
             finishReached[i] = false;
             //Debug.Log(curLoc[i]);
         }
@@ -57,6 +61,10 @@ public class PlayerMovement : MonoBehaviour
             roundStarted = true;
             curLoc[playNum] += DiceNumberTextScript.diceNumber;
             PlayerMovement.elapsedTime = 0;
+            if(finishReached[playNum] == true)
+            {
+                EndRound();
+            }
             DiceCheckZoneScript.diceStat = false;
             
         }
@@ -65,41 +73,40 @@ public class PlayerMovement : MonoBehaviour
         if(curLoc[playNum] < 63){
             MovePlayer();
         }
-        else if(curLoc[playNum] == 63 && roundStarted == true)
+        else if(curLoc[playNum] >= 63 && roundStarted == true)
         {
+            curLoc[playNum] = 63;
             MovePlayer();
             finishReached[playNum] = true;
             Debug.Log("precies");
 
         }
-        else if(curLoc[playNum] > 63)
-        {
-            if (finishReached[playNum] )
-            {
-                Debug.Log(playNum);
-                curLoc[playNum] = 63;
-                MovePlayer();
-                // if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
-                // {
-                //     EndRound();
-                // }
-                // else
-                // {
-                    Debug.Log("hoi");
-                    curLoc[playNum] = 64;
-                // }
-            }
-            else if(roundStarted == true)
-            {
-                curLoc[playNum] = 63;
-                MovePlayer();
-                finishReached[playNum] = true;
-                Debug.Log("hier");
-                curLoc[playNum] = 64;
+        // else if(curLoc[playNum] > 63)
+        // {
+        //     if (finishReached[playNum] )
+        //     {
+        //         Debug.Log(playNum);
+        //         curLoc[playNum] = 63;
+        //         MovePlayer();
+        //         // if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
+        //         // {
+        //         //     EndRound();
+        //         // }
+        //         // else
+        //         // {
+        //             Debug.Log("hoi");
+        //             curLoc[playNum] = 64;
+        //         // }
+        //     }
+        //     else if(roundStarted == true)
+        //     {
+        //         curLoc[playNum] = 63;
+        //         MovePlayer();
+        //         finishReached[playNum] = true;
+        //         Debug.Log("hier");
+        //         curLoc[playNum] = 64;
 
-            }
-            
-        }
+
 
         //adds 1 to player number after round is finished
         if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
@@ -149,6 +156,14 @@ public class PlayerMovement : MonoBehaviour
         NextPlayer();
         roundStarted = false;
         DiceScript.throwReady = true;
+        if(isEqual = finishCheck.SequenceEqual(finishReached))
+        {
+            Debug.Log("finished");
+        }
+        else if(finishReached[playNum] == true)
+            {
+                NextPlayer();
+            }
     }
 
     void MovePlayer(){
