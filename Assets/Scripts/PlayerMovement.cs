@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public static int[] curLoc = {1,1,1,1};
     public string tileLoc = null;
     public static bool roundStarted = false;
-    public bool[] FinishReached = {false,false,false,false};
+    public bool[] finishReached = {false,false,false,false};
 
     private Vector3 endPosition;
     private Vector3 startPosition;
@@ -31,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
         {
             SubLocation(i);
             transform.GetChild(i).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
-            curLoc[i] = 60;
-            FinishReached[i] = false;
+            curLoc[i] = 55;
+            finishReached[i] = false;
             //Debug.Log(curLoc[i]);
         }
        //alle nonactieve spelers uitzetten
@@ -65,29 +65,40 @@ public class PlayerMovement : MonoBehaviour
         if(curLoc[playNum] < 63){
             MovePlayer();
         }
-        else if(curLoc[playNum] == 63)
+        else if(curLoc[playNum] == 63 && roundStarted == true)
         {
             MovePlayer();
-            FinishReached[playNum] = true;
+            finishReached[playNum] = true;
+            Debug.Log("precies");
 
         }
-        else if(curLoc[playNum] >= 63)
+        else if(curLoc[playNum] > 63)
         {
-            if(FinishReached[playNum] == false)
-            {
-                curLoc[playNum] = 63;
-                MovePlayer();
-                FinishReached[playNum] = true;
-                Debug.Log("hier");
-
-            }
-            else if (FinishReached[playNum])
+            if (finishReached[playNum] )
             {
                 Debug.Log(playNum);
                 curLoc[playNum] = 63;
-                EndRound();
-                Debug.Log("hoi");
+                MovePlayer();
+                // if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
+                // {
+                //     EndRound();
+                // }
+                // else
+                // {
+                    Debug.Log("hoi");
+                    curLoc[playNum] = 64;
+                // }
             }
+            else if(roundStarted == true)
+            {
+                curLoc[playNum] = 63;
+                MovePlayer();
+                finishReached[playNum] = true;
+                Debug.Log("hier");
+                curLoc[playNum] = 64;
+
+            }
+            
         }
 
         //adds 1 to player number after round is finished
