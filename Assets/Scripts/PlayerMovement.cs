@@ -73,38 +73,13 @@ public class PlayerMovement : MonoBehaviour
         if(curLoc[playNum] < 63){
             MovePlayer();
         }
+        //regulate if player has reached or exceeded the finish
         else if(curLoc[playNum] >= 63 && roundStarted == true)
         {
             curLoc[playNum] = 63;
             MovePlayer();
             finishReached[playNum] = true;
-            Debug.Log("precies");
-
         }
-        // else if(curLoc[playNum] > 63)
-        // {
-        //     if (finishReached[playNum] )
-        //     {
-        //         Debug.Log(playNum);
-        //         curLoc[playNum] = 63;
-        //         MovePlayer();
-        //         // if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
-        //         // {
-        //         //     EndRound();
-        //         // }
-        //         // else
-        //         // {
-        //             Debug.Log("hoi");
-        //             curLoc[playNum] = 64;
-        //         // }
-        //     }
-        //     else if(roundStarted == true)
-        //     {
-        //         curLoc[playNum] = 63;
-        //         MovePlayer();
-        //         finishReached[playNum] = true;
-        //         Debug.Log("hier");
-        //         curLoc[playNum] = 64;
 
 
 
@@ -156,10 +131,12 @@ public class PlayerMovement : MonoBehaviour
         NextPlayer();
         roundStarted = false;
         DiceScript.throwReady = true;
+        //see if all players have finished
         if(isEqual = finishCheck.SequenceEqual(finishReached))
         {
             Debug.Log("finished");
         }
+        //skip player
         else if(finishReached[playNum] == true)
             {
                 NextPlayer();
