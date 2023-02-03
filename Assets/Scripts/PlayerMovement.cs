@@ -62,10 +62,6 @@ public class PlayerMovement : MonoBehaviour
             roundStarted = true;
             curLoc[playNum] += DiceNumberTextScript.diceNumber;
             PlayerMovement.elapsedTime = 0;
-            if(finishReached[playNum] == true)
-            {
-                EndRound();
-            }
             DiceCheckZoneScript.diceStat = false;
             
         }
@@ -143,9 +139,9 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("finished");
         }
         //skip player
-        else if(finishReached[playNum] == true)
+        else if(finishReached[playNum] == true && isEqual == false)
             {
-                NextPlayer();
+                EndRound();
             }
     }
 
