@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public bool[] finishReached = {false,false,false,false};
     public bool[] finishCheck = {true, true, true, true};
     public bool isEqual;
+    public bool firstFinish = false;
 
 
     private Vector3 endPosition;
