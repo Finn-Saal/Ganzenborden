@@ -79,6 +79,11 @@ public class PlayerMovement : MonoBehaviour
             curLoc[playNum] = 63;
             MovePlayer();
             finishReached[playNum] = true;
+            if(firstFinish == false)
+            {
+                Debug.Log("you won!");
+                firstFinish = true;
+            }
         }
 
 
