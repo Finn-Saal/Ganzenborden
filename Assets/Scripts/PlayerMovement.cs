@@ -8,9 +8,10 @@ public class PlayerMovement : MonoBehaviour
 { 
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
+    public GameObject effects;    
     public Vector3 positionToGo;
     public Vector3 positionCheck;
-    public static int playerMax = 3;
+    public static int playerMax = 2;
     public static int[] curLoc = {1,1,1,1};
     public string tileLoc = null;
     public static bool roundStarted = false;
@@ -79,6 +80,9 @@ public class PlayerMovement : MonoBehaviour
             if(firstFinish == false)
             {
                 Debug.Log("you won!");
+                for(int i = 0; i<=20; i++){
+                    GameObject.Find("ConfettiBlastBlue").GetComponent<ParticleSystem>().Play();
+                }
                 firstFinish = true;
             }
         }
