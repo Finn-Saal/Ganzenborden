@@ -79,11 +79,15 @@ public class PlayerMovement : MonoBehaviour
             finishReached[playNum] = true;
             if(firstFinish == false)
             {
-                Debug.Log("you won!");
-                for(int i = 0; i<=20; i++){
-                    GameObject.Find("ConfettiBlastBlue").GetComponent<ParticleSystem>().Play();
+                //Debug.Log("you won!");
+                if(blend >= 0.9)
+                {
+                GameObject.Find("ConfettiBlastBlue").GetComponent<ParticleSystem>().Play();
                 }
+                if(blend >= 0.99)
+                {
                 firstFinish = true;
+                }
             }
         }
 
