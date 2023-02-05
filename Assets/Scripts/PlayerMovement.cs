@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
         {
             SubLocation(i);
             transform.GetChild(i).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
-            curLoc[i] = 59;
+            curLoc[i] = 1;
             finishReached[i] = false;
             //Debug.Log(curLoc[i]);
         }
@@ -68,7 +68,13 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //makes sure tile number cant go over 63 and moves correct player to new position
-        if(curLoc[playNum] < 63){
+        if(curLoc[playNum] == 1)
+        {
+            SubLocation(playNum);
+            transform.GetChild(playNum).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
+        }
+        
+        else if(curLoc[playNum] < 63){
             MovePlayer();
         }
         //regulate if player has reached or exceeded the finish
@@ -80,13 +86,14 @@ public class PlayerMovement : MonoBehaviour
             if(firstFinish == false)
             {
                 //Debug.Log("you won!");
-                if(blend >= 0.9)
+                if(blend >= 0.8)
                 {
                 GameObject.Find("ConfettiBlastBlue").GetComponent<ParticleSystem>().Play();
                 }
                 if(blend >= 0.99)
                 {
                 firstFinish = true;
+
                 }
             }
         }
