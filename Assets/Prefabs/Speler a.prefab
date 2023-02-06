@@ -343,8 +343,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 0}
+  effects: {fileID: 0}
   positionToGo: {x: 0, y: 0, z: 0}
-  curLoc: 
+  positionCheck: {x: 0, y: 0, z: 0}
+  tileLoc: 
+  finishReached: 00000000
+  finishCheck: 01010101
+  isEqual: 0
+  firstFinish: 0
+  percentageComplete: 0
+  blend: 0
 --- !u!1 &8342068334328679947
 GameObject:
   m_ObjectHideFlags: 0
