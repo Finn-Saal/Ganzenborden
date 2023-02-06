@@ -70,20 +70,20 @@ public class PlayerMovement : MonoBehaviour
             
         }
         
-        //makes sure tile number cant go over 63 and moves correct player to new position
+        //makes sure tile number cant go over 64 and moves correct player to new position
         if(curLoc[playNum] == 1)
         {
             SubLocation(playNum);
             transform.GetChild(playNum).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
         }
         
-        else if(curLoc[playNum] < 63){
+        else if(curLoc[playNum] < 64){
             MovePlayer();
         }
         //regulate if player has reached or exceeded the finish
-        else if(curLoc[playNum] >= 63 && roundStarted == true)
+        else if(curLoc[playNum] >= 64 && roundStarted == true)
         {
-            curLoc[playNum] = 63;
+            curLoc[playNum] = 64;
             MovePlayer();
             finishReached[playNum] = true;
             if(firstFinish == false)
