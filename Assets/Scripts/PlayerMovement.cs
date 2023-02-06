@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     public bool[] finishCheck = {true, true, true, true};
     public bool isEqual;
     public bool firstFinish = false;
+    public Quaternion rotationToGo;
+    public Quaternion startRotation;
 
 
     private Vector3 endPosition;
@@ -60,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
             //defines the starting position of player
             FindPosition();
             startPosition = transform.GetChild(playNum).position; 
+            startRotation = transform.GetChild(playNum).rotation; 
             roundStarted = true;
             curLoc[playNum] += DiceNumberTextScript.diceNumber;
             PlayerMovement.elapsedTime = 0;
@@ -129,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
     void FindPosition()
     {
         positionToGo = board.transform.GetChild(curLoc[playNum]-1).Find(tileLoc).GetChild(0).position; 
+        rotationToGo = board.transform.GetChild(curLoc[playNum]-1).rotation;
     }   
 
     void NextPlayer()
@@ -176,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
             endPosition = positionToGo;
 
             //lerps player to new loacation
+            transform.GetChild(playNum).rotation = Quaternion.Lerp(startRotation, rotationToGo, percentageComplete);
             transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, blend);
     }
 }
