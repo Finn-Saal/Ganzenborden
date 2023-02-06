@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Dynamic;
+using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
+    public GameObject effects;    
     public Vector3 positionToGo;
     public Vector3 positionCheck;
     public static int playerMax = 2;
     public static int[] curLoc = {1,1,1,1};
     public string tileLoc = null;
     public static bool roundStarted = false;
+    public bool[] finishReached = {false,false,false,false};
+    public bool[] finishCheck = {true, true, true, true};
+    public bool isEqual;
+    public bool firstFinish = false;
+
 
     private Vector3 endPosition;
     private Vector3 startPosition;
@@ -31,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
             SubLocation(i);
             transform.GetChild(i).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
             curLoc[i] = 1;
+            finishReached[i] = false;
             //Debug.Log(curLoc[i]);
         }
        //alle nonactieve spelers uitzetten
@@ -60,37 +68,42 @@ public class PlayerMovement : MonoBehaviour
         }
         
         //makes sure tile number cant go over 63 and moves correct player to new position
-        if(curLoc[playNum] <= 63){
-            
-            //defines time for the lerp function and smoothens the animation
-            elapsedTime += Time.deltaTime;
-            percentageComplete = elapsedTime / desiredDuration;
-            blend = Mathf.SmoothStep(0, 1, percentageComplete);
-
-            //stops percentageComplete from going above 1
-            if(percentageComplete >= 1)
-            {
-                percentageComplete = 1;
-            }
-
-            FindPosition();
-            endPosition = positionToGo;
-
-            //lerps player to new loacation
-            transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, blend);
-
+        if(curLoc[playNum] == 1)
+        {
+            SubLocation(playNum);
+            transform.GetChild(playNum).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
         }
-        else
+        
+        else if(curLoc[playNum] < 63){
+            MovePlayer();
+        }
+        //regulate if player has reached or exceeded the finish
+        else if(curLoc[playNum] >= 63 && roundStarted == true)
         {
             curLoc[playNum] = 63;
+            MovePlayer();
+            finishReached[playNum] = true;
+            if(firstFinish == false)
+            {
+                //Debug.Log("you won!");
+                if(blend >= 0.8)
+                {
+                GameObject.Find("ConfettiBlastBlue").GetComponent<ParticleSystem>().Play();
+                }
+                if(blend >= 0.99)
+                {
+                firstFinish = true;
+
+                }
+            }
         }
+
+
 
         //adds 1 to player number after round is finished
         if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
         {
-            NextPlayer();
-            roundStarted = false;
-            DiceScript.throwReady = true;
+            EndRound();
         }
         SubLocation(playNum);
     }
@@ -129,4 +142,41 @@ public class PlayerMovement : MonoBehaviour
                 playNum = 0;
             }
     }
+
+    void EndRound()
+    {
+        NextPlayer();
+        roundStarted = false;
+        DiceScript.throwReady = true;
+        //see if all players have finished
+        if(isEqual = finishCheck.SequenceEqual(finishReached))
+        {
+            Debug.Log("finished");
+        }
+        //skip player
+        else if(finishReached[playNum] == true && isEqual == false)
+            {
+                EndRound();
+            }
+    }
+
+    void MovePlayer(){
+            //defines time for the lerp function and smoothens the animation
+            elapsedTime += Time.deltaTime;
+            percentageComplete = elapsedTime / desiredDuration;
+            blend = Mathf.SmoothStep(0, 1, percentageComplete);
+
+            //stops percentageComplete from going above 1
+            if(percentageComplete >= 1)
+            {
+                percentageComplete = 1;
+            }
+
+            FindPosition();
+            endPosition = positionToGo;
+
+            //lerps player to new loacation
+            transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, blend);
+    }
 }
+

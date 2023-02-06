@@ -41,6 +41,8 @@ public class PauseMenu : MonoBehaviour
     public void LoadMenu()
     {
         Resume();
+        PlayerMovement.roundStarted = false;
+        DiceScript.throwReady = true;
         SceneManager.LoadScene("Menu");
     }
 
