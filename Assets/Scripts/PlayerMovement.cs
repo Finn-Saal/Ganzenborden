@@ -155,7 +155,18 @@ public class PlayerMovement : MonoBehaviour
                 doneEvent = true;
             }
         }
-        if( curLoc[playNum] == 58+1)
+        else if( curLoc[playNum] == 42+1)
+        {
+            if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
+            {
+                FindPosition();
+                startPosition = transform.GetChild(playNum).position; 
+                startRotation = transform.GetChild(playNum).rotation; 
+                curLoc[playNum] = 38;
+                PlayerMovement.elapsedTime = 0;
+            }
+        }
+        else if( curLoc[playNum] == 58+1)
         {
             if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
             {
