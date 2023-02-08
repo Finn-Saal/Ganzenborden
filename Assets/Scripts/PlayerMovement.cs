@@ -17,10 +17,19 @@ public class PlayerMovement : MonoBehaviour
     public static bool roundStarted = false;
     public bool[] finishReached = {false,false,false,false};
     public bool[] finishCheck = {true, true, true, true};
+    public bool[] skipRound = {false, false, false, false};
+    public int[] skipRoundTurn = {0, 0, 0, 0};
+
+
     public bool isEqual;
     public bool firstFinish = false;
+    public bool doneEvent = false;
+    public bool startRound = false;
     public Quaternion rotationToGo;
     public Quaternion startRotation;
+    public int roundNum = 0;
+
+    
 
 
     private Vector3 endPosition;
@@ -57,54 +66,103 @@ public class PlayerMovement : MonoBehaviour
         
         //Debug.Log(board.transform.Find("Vakje " + curLoc).position);
         positionCheck = transform.GetChild(playNum).position;
-        if(DiceCheckZoneScript.diceStat == true)
+        if(playNum == 0 && startRound == true)
+            {
+                roundNum++;
+                startRound = false;
+            }
+        else{
+            startRound = false;
+        }
+
+        if(skipRound[playNum] == true && roundNum > skipRoundTurn[playNum])
+        {
+            skipRound[playNum] = false;
+            Debug.Log("skip round " + playNum);
+            EndRound();  
+        }
+        else if(DiceCheckZoneScript.diceStat == true)
         {
             //defines the starting position of player
             FindPosition();
             startPosition = transform.GetChild(playNum).position; 
             startRotation = transform.GetChild(playNum).rotation; 
             roundStarted = true;
+            
             curLoc[playNum] += DiceNumberTextScript.diceNumber;
             PlayerMovement.elapsedTime = 0;
+            doneEvent = false;
             DiceCheckZoneScript.diceStat = false;
-            
+            Debug.Log(curLoc[playNum] +" "+ playNum);
         }
         
         //makes sure tile number cant go over 64 and moves correct player to new position
-        if(curLoc[playNum] == 1)
+        if(skipRound[playNum] == false || roundNum == skipRoundTurn[playNum])
         {
-            SubLocation(playNum);
-            transform.GetChild(playNum).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
-        }
-        
-        else if(curLoc[playNum] < 64){
-            MovePlayer();
-        }
-        //regulate if player has reached or exceeded the finish
-        else if(curLoc[playNum] >= 64 && roundStarted == true)
-        {
-            curLoc[playNum] = 64;
-            MovePlayer();
-            finishReached[playNum] = true;
-            if(firstFinish == false)
+            if(curLoc[playNum] == 1)
             {
-                //Debug.Log("you won!");
-                if(blend >= 0.8)
+                SubLocation(playNum);
+                transform.GetChild(playNum).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
+            }
+            
+            else if(curLoc[playNum] < 64){
+                MovePlayer();
+            }
+            //regulate if player has reached or exceeded the finish
+            else if(curLoc[playNum] >= 64 && roundStarted == true)
+            {
+                curLoc[playNum] = 64;
+                MovePlayer();
+                finishReached[playNum] = true;
+                if(firstFinish == false)
                 {
-                GameObject.Find("ConfettiBlastBlue").GetComponent<ParticleSystem>().Play();
-                }
-                if(blend >= 0.99)
-                {
-                firstFinish = true;
+                    //Debug.Log("you won!");
+                    if(blend >= 0.8)
+                    {
+                    GameObject.Find("ConfettiBlastBlue").GetComponent<ParticleSystem>().Play();
+                    }
+                    if(blend >= 0.99)
+                    {
+                    firstFinish = true;
 
+                    }
                 }
             }
         }
-
+        //special events, https://123bordspellen.com/hoe-speel-je-ganzenbord/
+        //repeat previously thrown number
+        if( curLoc[playNum] == 5+1 || curLoc[playNum] == 9+1 ||curLoc[playNum] == 14+1 ||curLoc[playNum] == 18+1 ||curLoc[playNum] == 23+1 ||
+            curLoc[playNum] == 27+1||curLoc[playNum] == 32+1 ||curLoc[playNum] == 36+1 ||curLoc[playNum] == 41+1 ||curLoc[playNum] == 45+1 ||
+            curLoc[playNum] == 50+1||curLoc[playNum] == 54+1 ||curLoc[playNum] == 59+1)
+        {
+            if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
+            {
+                FindPosition();
+                startPosition = transform.GetChild(playNum).position; 
+                startRotation = transform.GetChild(playNum).rotation; 
+                curLoc[playNum] += DiceNumberTextScript.diceNumber;
+                PlayerMovement.elapsedTime = 0;
+            }
+        }
+        //skip 1 turn
+        else if(curLoc[playNum] == 19+1)
+        {
+            if(skipRound[playNum] == false && roundStarted)
+            {
+                
+                skipRoundTurn[playNum] = roundNum;
+                skipRound[playNum] = true;
+                doneEvent = true;
+            }
+        }
+        else
+        {
+            doneEvent = true;
+        }
 
 
         //adds 1 to player number after round is finished
-        if(blend == 1 && DiceScript.throwReady == false && roundStarted == true)
+        if(blend == 1 && DiceScript.throwReady == false && roundStarted && doneEvent)
         {
             EndRound();
         }
@@ -149,6 +207,7 @@ public class PlayerMovement : MonoBehaviour
 
     void EndRound()
     {
+        startRound = true;
         NextPlayer();
         roundStarted = false;
         DiceScript.throwReady = true;
