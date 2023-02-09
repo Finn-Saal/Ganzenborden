@@ -6,7 +6,7 @@ using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
-    public int startPos = 1;
+    public const int startPos = 30;
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public GameObject effects;    
@@ -84,15 +84,18 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("skip round " + playNum);
             EndRound();  
         }
-        else if(playTrap[playNum] == false || DiceNumberTextScript.diceNumber == 6)
-        {
-            CheckDice();
-        }
-        else if(playTrap[playNum] && DiceNumberTextScript.diceNumber != 6 && roundNum > skipRoundTurn[playNum]){
+        else if(playTrap[playNum] && DiceNumberTextScript.diceNumber != 6 && roundNum > playTrapTurn[playNum] && DiceCheckZoneScript.diceStat == true){
             playTrap[playNum] = false;
             Debug.Log("trapped done " + playNum);
+            DiceCheckZoneScript.diceStat = false;
             EndRound();  
         }
+        else if(playTrap[playNum] == false || DiceNumberTextScript.diceNumber == 6)
+        {
+            playTrap[playNum] = false;
+            CheckDice();
+        }
+        
         
         
         //makes sure tile number cant go over 64 and moves correct player to new position
@@ -168,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if( curLoc[playNum] == 31+1 || curLoc[playNum] == 52+1)
         {
-            if(playTrap[playNum] == false)
+            if(playTrap[playNum] == false && roundStarted)
             {
                 playTrapTurn[playNum] = roundNum;
                 playTrap[playNum] = true;
