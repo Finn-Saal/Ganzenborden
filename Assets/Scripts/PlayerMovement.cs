@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Dynamic;
+using System;
 using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
@@ -14,14 +15,17 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 positionCheck;
     public static int playerMax = 2;
     public static int[] curLoc = {1,1,1,1};
+    public static int[] prevLoc = {1,1,1,1};
     public string tileLoc = null;
     public static bool roundStarted = false;
+    public bool someTrapped = false;
     public bool[] finishReached = {false,false,false,false};
     public bool[] finishCheck = {true, true, true, true};
     public bool[] skipRound = {false, false, false, false};
     public int[] skipRoundTurn = {0, 0, 0, 0};
     public bool[] playTrap = {false, false, false, false};
     public int[] playTrapTurn = {0, 0, 0, 0};
+    public int[] playTrapLoc = {0, 0, 0, 0};
 
 
     public bool isEqual;
@@ -176,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
                 playTrapTurn[playNum] = roundNum;
                 playTrap[playNum] = true;
                 doneEvent = true;
+                playTrapLoc[playNum] = curLoc[playNum];
             }
         }
         //death to start
@@ -286,10 +291,26 @@ public class PlayerMovement : MonoBehaviour
                     startPosition = transform.GetChild(playNum).position; 
                     startRotation = transform.GetChild(playNum).rotation; 
                     roundStarted = true;
-                    
+                    prevLoc[playNum] = curLoc[playNum];
                     curLoc[playNum] += DiceNumberTextScript.diceNumber;
                     PlayerMovement.elapsedTime = 0;
                     doneEvent = false;
+
+                    foreach(bool i in playTrap)
+                    {
+                        if(i){
+                            someTrapped = true;
+                        }
+                    }
+                    
+                    for(int i = 0; i<=playerMax; i++)
+                    {
+                        if(someTrapped && prevLoc[playNum]<playTrapLoc[i] && playTrapLoc[i]<curLoc[playNum])
+                        {
+                            playTrap[i] = false;
+                        }
+                    }
+                    someTrapped = false;
                     DiceCheckZoneScript.diceStat = false;
                     Debug.Log(curLoc[playNum] +" "+ playNum);
                 }
