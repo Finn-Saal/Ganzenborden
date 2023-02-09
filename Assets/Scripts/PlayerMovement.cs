@@ -216,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
                 FindPosition();
                 startPosition = transform.GetChild(playNum).position; 
                 startRotation = transform.GetChild(playNum).rotation; 
-                curLoc[playNum] = 1;
+                curLoc[playNum] = 2;
                 PlayerMovement.elapsedTime = 0;
             }
         }
