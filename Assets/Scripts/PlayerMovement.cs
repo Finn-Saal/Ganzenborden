@@ -7,7 +7,7 @@ using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
-    public const int startPos = 30;
+    public const int startPos = 1;
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public GameObject effects;    
@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public string tileLoc = null;
     public static bool roundStarted = false;
     public bool someTrapped = false;
+    public bool bridgeUsed = false;
     public bool[] finishReached = {false,false,false,false};
     public bool[] finishCheck = {true, true, true, true};
     public bool[] skipRound = {false, false, false, false};
@@ -148,6 +149,30 @@ public class PlayerMovement : MonoBehaviour
                 startRotation = transform.GetChild(playNum).rotation; 
                 curLoc[playNum] += DiceNumberTextScript.diceNumber;
                 PlayerMovement.elapsedTime = 0;
+            }
+        }
+        else if(curLoc[playNum] == 6+1 && !bridgeUsed)
+        {
+            if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
+            {
+                FindPosition();
+                startPosition = transform.GetChild(playNum).position; 
+                startRotation = transform.GetChild(playNum).rotation; 
+                curLoc[playNum] = 12+1;
+                PlayerMovement.elapsedTime = 0;
+                bridgeUsed = true;
+            }
+        }
+        else if(curLoc[playNum] == 12+1 && !bridgeUsed)
+        {
+            if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
+            {
+                FindPosition();
+                startPosition = transform.GetChild(playNum).position; 
+                startRotation = transform.GetChild(playNum).rotation; 
+                curLoc[playNum] = 6+1;
+                PlayerMovement.elapsedTime = 0;
+                bridgeUsed = true;
             }
         }
         //skip 1 turn
@@ -311,6 +336,8 @@ public class PlayerMovement : MonoBehaviour
                         }
                     }
                     someTrapped = false;
+
+                    bridgeUsed = false;
                     DiceCheckZoneScript.diceStat = false;
                     Debug.Log(curLoc[playNum] +" "+ playNum);
                 }
