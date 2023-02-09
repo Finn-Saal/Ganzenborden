@@ -6,6 +6,7 @@ using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
+    public int startPos = 1;
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public GameObject effects;    
@@ -19,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     public bool[] finishCheck = {true, true, true, true};
     public bool[] skipRound = {false, false, false, false};
     public int[] skipRoundTurn = {0, 0, 0, 0};
+    public bool[] playTrap = {false, false, false, false};
+    public int[] playTrapTurn = {0, 0, 0, 0};
 
 
     public bool isEqual;
@@ -47,8 +50,8 @@ public class PlayerMovement : MonoBehaviour
         for(int i = 0; i<=playerMax; i++)
         {
             SubLocation(i);
-            transform.GetChild(i).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
-            curLoc[i] = 1;
+            transform.GetChild(i).position = board.transform.Find("Vakje " + startPos).Find(tileLoc).GetChild(0).position;
+            curLoc[i] = startPos;
             finishReached[i] = false;
             //Debug.Log(curLoc[i]);
         }
@@ -81,28 +84,24 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("skip round " + playNum);
             EndRound();  
         }
-        else if(DiceCheckZoneScript.diceStat == true)
+        else if(playTrap[playNum] == false || DiceNumberTextScript.diceNumber == 6)
         {
-            //defines the starting position of player
-            FindPosition();
-            startPosition = transform.GetChild(playNum).position; 
-            startRotation = transform.GetChild(playNum).rotation; 
-            roundStarted = true;
-            
-            curLoc[playNum] += DiceNumberTextScript.diceNumber;
-            PlayerMovement.elapsedTime = 0;
-            doneEvent = false;
-            DiceCheckZoneScript.diceStat = false;
-            Debug.Log(curLoc[playNum] +" "+ playNum);
+            CheckDice();
         }
+        else if(playTrap[playNum] && DiceNumberTextScript.diceNumber != 6 && roundNum > skipRoundTurn[playNum]){
+            playTrap[playNum] = false;
+            Debug.Log("trapped done " + playNum);
+            EndRound();  
+        }
+        
         
         //makes sure tile number cant go over 64 and moves correct player to new position
         if(skipRound[playNum] == false || roundNum == skipRoundTurn[playNum])
         {
-            if(curLoc[playNum] == 1)
+            if(curLoc[playNum] == startPos)
             {
                 SubLocation(playNum);
-                transform.GetChild(playNum).position = board.transform.Find("Vakje " + 1).Find(tileLoc).GetChild(0).position;
+                transform.GetChild(playNum).position = board.transform.Find("Vakje " + startPos).Find(tileLoc).GetChild(0).position;
             }
             
             else if(curLoc[playNum] < 64){
@@ -155,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
                 doneEvent = true;
             }
         }
+        //labyrinth to 37
         else if( curLoc[playNum] == 42+1)
         {
             if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
@@ -166,6 +166,16 @@ public class PlayerMovement : MonoBehaviour
                 PlayerMovement.elapsedTime = 0;
             }
         }
+        else if( curLoc[playNum] == 31+1 || curLoc[playNum] == 52+1)
+        {
+            if(playTrap[playNum] == false)
+            {
+                playTrapTurn[playNum] = roundNum;
+                playTrap[playNum] = true;
+                doneEvent = true;
+            }
+        }
+        //death to start
         else if( curLoc[playNum] == 58+1)
         {
             if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
@@ -263,6 +273,23 @@ public class PlayerMovement : MonoBehaviour
             //lerps player to new loacation
             transform.GetChild(playNum).rotation = Quaternion.Lerp(startRotation, rotationToGo, percentageComplete);
             transform.GetChild(playNum).position = Vector3.Lerp(startPosition, endPosition, blend);
+    }
+
+    void CheckDice(){
+        if(DiceCheckZoneScript.diceStat == true)
+                {
+                    //defines the starting position of player
+                    FindPosition();
+                    startPosition = transform.GetChild(playNum).position; 
+                    startRotation = transform.GetChild(playNum).rotation; 
+                    roundStarted = true;
+                    
+                    curLoc[playNum] += DiceNumberTextScript.diceNumber;
+                    PlayerMovement.elapsedTime = 0;
+                    doneEvent = false;
+                    DiceCheckZoneScript.diceStat = false;
+                    Debug.Log(curLoc[playNum] +" "+ playNum);
+                }
     }
 }
 
