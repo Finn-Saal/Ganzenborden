@@ -7,7 +7,7 @@ using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
-    public const int startPos = 1;
+    public const int startPos = 17;
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public GameObject effects;    
@@ -18,13 +18,14 @@ public class PlayerMovement : MonoBehaviour
     public static int[] prevLoc = {1,1,1,1};
     public string tileLoc = null;
     public static bool roundStarted = false;
-    public bool someTrapped = false;
+    public static bool someTrapped = false;
+    public static bool someSkip = false;
     public bool bridgeUsed = false;
     public bool[] finishReached = {false,false,false,false};
     public bool[] finishCheck = {true, true, true, true};
-    public bool[] skipRound = {false, false, false, false};
-    public int[] skipRoundTurn = {0, 0, 0, 0};
-    public bool[] playTrap = {false, false, false, false};
+    public static bool[] skipRound = {false, false, false, false};
+    public static int[] skipRoundTurn = {0, 0, 0, 0};
+    public static bool[] playTrap = {false, false, false, false};
     public int[] playTrapTurn = {0, 0, 0, 0};
     public int[] playTrapLoc = {0, 0, 0, 0};
 
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     public bool startRound = false;
     public Quaternion rotationToGo;
     public Quaternion startRotation;
-    public int roundNum = 0;
+    public static int roundNum = 0;
 
     
 
@@ -320,11 +321,17 @@ public class PlayerMovement : MonoBehaviour
                     curLoc[playNum] += DiceNumberTextScript.diceNumber;
                     PlayerMovement.elapsedTime = 0;
                     doneEvent = false;
-
+                    someSkip = false;
                     foreach(bool i in playTrap)
                     {
                         if(i){
                             someTrapped = true;
+                        }
+                    }
+                    foreach(bool i in skipRound)
+                    {
+                        if(i){
+                            someSkip = true;
                         }
                     }
                     
@@ -336,6 +343,7 @@ public class PlayerMovement : MonoBehaviour
                         }
                     }
                     someTrapped = false;
+                    
 
                     bridgeUsed = false;
                     DiceCheckZoneScript.diceStat = false;
