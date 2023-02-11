@@ -24,7 +24,7 @@ public class DiceNumberTextScript : MonoBehaviour {
 		locations.text = "";
 		turn.text = "Currently in round " + (PlayerMovement.roundNum+1).ToString();
 		trapped.text = "Trapped Players:<br>";
-		skipping.text = "Players ";
+		skipping.text = "Players skipping this round:<br>";
 
 		for(int i = 0; i<=PlayerMovement.playerMax; i++)
         {
@@ -42,21 +42,13 @@ public class DiceNumberTextScript : MonoBehaviour {
 			}
             locations.text += color + ": " + (PlayerMovement.curLoc[i]-1).ToString() + "<br>";  
 			
-			if(PlayerMovement.playTrap[i] && PlayerMovement.someTrapped){
-				trapped.text += color + ", ";
+			if(PlayerMovement.playTrap[i]){
+				trapped.text += color + "<br>";
 			}       
-			else{
-				trapped.text = "No players are trapped";
-			}
 
-			if(PlayerMovement.skipRound[i] && PlayerMovement.someSkip){
-				skipping.text += color + ",<br>";
-			}
-			else{
-				skipping.text = "No players are skipping this turn";
+			if(PlayerMovement.skipRound[i]){
+				skipping.text += color + "<br>";
 			}
 		}
-
-
 	}
 }

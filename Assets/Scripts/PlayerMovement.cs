@@ -7,7 +7,7 @@ using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
-    public const int startPos = 17;
+    public const int startPos = 30;
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public GameObject effects;    
@@ -291,7 +291,7 @@ public class PlayerMovement : MonoBehaviour
 
     void MovePlayer(){
             //defines time for the lerp function and smoothens the animation
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.deltaTime/DiceNumberTextScript.diceNumber*6;
             percentageComplete = elapsedTime / desiredDuration;
             blend = Mathf.SmoothStep(0, 1, percentageComplete);
 
