@@ -11,6 +11,7 @@ public class DiceNumberTextScript : MonoBehaviour {
 	public TextMeshProUGUI trapped;
 	public TextMeshProUGUI skipping;
 	public TextMeshProUGUI turn;
+	public TextMeshProUGUI curPlay;
 	string color;
 	public static int diceNumber;
 
@@ -25,7 +26,7 @@ public class DiceNumberTextScript : MonoBehaviour {
 		turn.text = "Currently in round " + (PlayerMovement.roundNum+1).ToString();
 		trapped.text = "Trapped Players:<br>";
 		skipping.text = "Players skipping this round:<br>";
-
+		curPlay.text = "Current player is ";
 		for(int i = 0; i<=PlayerMovement.playerMax; i++)
         {
 			if(i == 0){
@@ -50,5 +51,17 @@ public class DiceNumberTextScript : MonoBehaviour {
 				skipping.text += color + "<br>";
 			}
 		}
-	}
+			if(PlayerMovement.playNum == 0){
+				curPlay.text += "Red";
+			}
+			else if(PlayerMovement.playNum == 1){
+				curPlay.text += "Blue";
+			}
+			else if(PlayerMovement.playNum == 2){
+				curPlay.text += "Green";
+			}
+			else if(PlayerMovement.playNum == 3){
+				curPlay.text += "Yellow";
+			}	
+		}
 }

@@ -7,7 +7,7 @@ using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
-    public const int startPos = 30;
+    public const int startPos = 1;
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public GameObject effects;    
@@ -28,6 +28,10 @@ public class PlayerMovement : MonoBehaviour
     public static bool[] playTrap = {false, false, false, false};
     public int[] playTrapTurn = {0, 0, 0, 0};
     public int[] playTrapLoc = {0, 0, 0, 0};
+    public int multiplier;
+    public int stepsBack;
+    public bool movedBack = true;
+
 
 
     public bool isEqual;
@@ -66,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         {
             GameObject.Find(i.ToString()).SetActive(false);
         } 
+       movedBack = true;
     }
 
     // Update is called once per frame
@@ -116,8 +121,7 @@ public class PlayerMovement : MonoBehaviour
             else if(curLoc[playNum] < 64){
                 MovePlayer();
             }
-            //regulate if player has reached or exceeded the finish
-            else if(curLoc[playNum] >= 64 && roundStarted == true)
+            else if(curLoc[playNum] == 64)
             {
                 curLoc[playNum] = 64;
                 MovePlayer();
@@ -135,6 +139,32 @@ public class PlayerMovement : MonoBehaviour
 
                     }
                 }
+            }
+            //regulate if player has reached or exceeded the finish
+            else if(curLoc[playNum] > 64 && roundStarted == true && finishReached[playNum])
+            {
+                curLoc[playNum] = 64;
+                MovePlayer();
+            }
+            else if(curLoc[playNum] > 64 && roundStarted == true && !finishReached[playNum])
+            {
+                if(movedBack){
+                    stepsBack = curLoc[playNum] - 64;
+                    movedBack = false;
+                }
+                curLoc[playNum] = 65;
+                MovePlayer();
+                if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
+                {
+                    FindPosition();
+                    startPosition = transform.GetChild(playNum).position; 
+                    startRotation = transform.GetChild(playNum).rotation; 
+                    curLoc[playNum] = 64-stepsBack;
+                    PlayerMovement.elapsedTime = 0;
+                    MovePlayer();
+                    movedBack = true;
+                }
+
             }
         }
         //special events, https://123bordspellen.com/hoe-speel-je-ganzenbord/
@@ -291,7 +321,25 @@ public class PlayerMovement : MonoBehaviour
 
     void MovePlayer(){
             //defines time for the lerp function and smoothens the animation
-            elapsedTime += Time.deltaTime/DiceNumberTextScript.diceNumber*6;
+            if(DiceNumberTextScript.diceNumber == 1){
+				multiplier = 3;
+			}
+			else if(DiceNumberTextScript.diceNumber == 2){
+				multiplier = 2;
+			}
+			else if(DiceNumberTextScript.diceNumber == 3){
+				multiplier = 2;
+			}
+			else if(DiceNumberTextScript.diceNumber == 4){
+				multiplier = 2;
+			}
+            else if(DiceNumberTextScript.diceNumber == 5){
+				multiplier = 1;
+			}
+            else if(DiceNumberTextScript.diceNumber == 6){
+				multiplier = 1;
+			}
+            elapsedTime += Time.deltaTime*multiplier;
             percentageComplete = elapsedTime / desiredDuration;
             blend = Mathf.SmoothStep(0, 1, percentageComplete);
 
