@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioListener.volume = PlayerPrefs.GetFloat("volume");
         //alle actieve spelers naar vakje verplaatsten
         for(int i = 0; i<=playerMax; i++)
         {
