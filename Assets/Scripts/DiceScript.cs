@@ -22,7 +22,7 @@ public class DiceScript : MonoBehaviour {
 				throwReady = false;
 				DiceNumberTextScript.diceNumber = 0;
 				float dirX = Random.Range (500, 2000);
-				float dirY = Random.Range (500, 2000);
+				float dirY = Random.Range (1500, 3000);
 				float dirZ = Random.Range (500, 2000);
 				transform.position = transform.position + new Vector3 (0, 3, 0);
 				transform.rotation = Quaternion.identity;
