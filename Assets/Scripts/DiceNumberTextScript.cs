@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.Netcode;
 
-public class DiceNumberTextScript : MonoBehaviour {
+
+public class DiceNumberTextScript : NetworkBehaviour {
 
 	public TextMeshProUGUI dice;
 	public TextMeshProUGUI locations;

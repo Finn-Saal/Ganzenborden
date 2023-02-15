@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 using System.Dynamic;
 using System;
 using System.Linq;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 { 
     public const int startPos = 20;
     public static int playNum = 0; //defines the player that rolls dice starting with player 0

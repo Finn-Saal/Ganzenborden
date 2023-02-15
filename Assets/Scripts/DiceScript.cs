@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class DiceScript : MonoBehaviour {
+public class DiceScript : NetworkBehaviour {
 
 	static Rigidbody rb;
 	public static Vector3 diceVelocity;

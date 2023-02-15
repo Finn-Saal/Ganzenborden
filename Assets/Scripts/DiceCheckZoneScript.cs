@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class DiceCheckZoneScript : MonoBehaviour {
+public class DiceCheckZoneScript : NetworkBehaviour {
 
 	Vector3 diceVelocity;
 	public static bool diceStat = false;	//check if dice has stopped rolling in the current round
