@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class CameraSwitch : MonoBehaviour
+public class CameraSwitch : NetworkBehaviour
 {
     public GameObject cameraMain;
     public GameObject cameraA;

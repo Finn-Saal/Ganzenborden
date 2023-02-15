@@ -199,6 +199,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39382428}
   m_CullTransparentMesh: 1
+--- !u!1 &64526628 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8342068334328679947, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
+  m_PrefabInstance: {fileID: 98247559}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &98247559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2768,6 +2773,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9015211043421694247, guid: 452c30403c3a0aa4686058ceab81fbd5, type: 3}
   m_PrefabInstance: {fileID: 98247559}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1048313974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64526628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
 --- !u!1 &1092105617
 GameObject:
   m_ObjectHideFlags: 0
@@ -4430,7 +4461,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7429730379221510793, guid: d86e97e6009faee4ba5fe5403d916150, type: 3}
   m_PrefabInstance: {fileID: 2044812608}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1923805627
+--- !u!114 &1923805621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4442,7 +4473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1923805628
+--- !u!114 &1923805622
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4451,7 +4482,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1923805620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
