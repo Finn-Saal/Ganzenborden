@@ -1,19 +1,20 @@
-using System.Collections;
+using System.Collections; 
 using System.Collections.Generic;
 using UnityEngine;
 using System.Dynamic;
 using System;
 using System.Linq;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour 
 { 
-    public const int startPos = 1;
+    //define all variables 
+    public const int startPos = 1; 
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public GameObject effects;    
     public Vector3 positionToGo;
     public Vector3 positionCheck;
-    public static int playerMax = 2;
+    public static int playerMax = 2; //defines the amount of players
     public static int[] curLoc = {1,1,1,1};
     public static int[] prevLoc = {1,1,1,1};
     public string tileLoc = null;
@@ -60,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         //alle actieve spelers naar vakje verplaatsten
         for(int i = 0; i<=playerMax; i++)
         {
+            //moves player to first position 
             SubLocation(i);
             transform.GetChild(i).position = board.transform.Find("Vakje " + startPos).Find(tileLoc).GetChild(0).position;
             curLoc[i] = startPos;
@@ -80,7 +82,8 @@ public class PlayerMovement : MonoBehaviour
         
         
         //Debug.Log(board.transform.Find("Vakje " + curLoc).position);
-        positionCheck = transform.GetChild(playNum).position;
+        positionCheck = transform.GetChild(playNum).position; //kijkt naar de positie van de speler 
+       //defines the rounds played and adds the next round to the total number  
         if(playNum == 0 && startRound == true)
             {
                 roundNum++;
@@ -89,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         else{
             startRound = false;
         }
-
+//kijkt of speler op een speciaal vakje staat
         if(skipRound[playNum] == true && roundNum > skipRoundTurn[playNum])
         {
             skipRound[playNum] = false;
@@ -141,12 +144,13 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
             }
-            //regulate if player has reached or exceeded the finish
+            //regulate if player has reached the finish
             else if(curLoc[playNum] > 64 && roundStarted == true && finishReached[playNum])
             {
                 curLoc[playNum] = 64;
                 MovePlayer();
             }
+            //regulates if player exceeds finish and moves back player
             else if(curLoc[playNum] > 64 && roundStarted == true && !finishReached[playNum])
             {
                 if(movedBack){
@@ -169,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //special events, https://123bordspellen.com/hoe-speel-je-ganzenbord/
-        //repeat previously thrown number
+        //repeat previously thrown number als speler op rood gans vakje komt 
         if( curLoc[playNum] == 5+1 || curLoc[playNum] == 9+1 ||curLoc[playNum] == 14+1 ||curLoc[playNum] == 18+1 ||curLoc[playNum] == 23+1 ||
             curLoc[playNum] == 27+1||curLoc[playNum] == 32+1 ||curLoc[playNum] == 36+1 ||curLoc[playNum] == 41+1 ||curLoc[playNum] == 45+1 ||
             curLoc[playNum] == 50+1||curLoc[playNum] == 54+1 ||curLoc[playNum] == 59+1)
@@ -183,7 +187,8 @@ public class PlayerMovement : MonoBehaviour
                 PlayerMovement.elapsedTime = 0;
             }
         }
-        else if(curLoc[playNum] == 6+1 && !bridgeUsed)
+        //als speler op de eerste brug komt dan gaat hij naar de volgende brug maar komt de speler op de tweede brug dan gaat hij terug naar de eerste brug 
+        else if(curLoc[playNum] == 6+1 && !bridgeUsed) 
         {
             if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
             {
@@ -207,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
                 bridgeUsed = true;
             }
         }
-        //skip 1 turn
+        //skip 1 turn if player ends on number 20 
         else if(curLoc[playNum] == 19+1)
         {
             if(skipRound[playNum] == false && roundStarted)
@@ -218,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
                 doneEvent = true;
             }
         }
-        //labyrinth to 37
+        //labyrinth to 37 beweegt speler terug naar nummer 37 
         else if( curLoc[playNum] == 42+1)
         {
             if(blend >= 0.9 && DiceScript.throwReady == false && roundStarted)
@@ -230,6 +235,7 @@ public class PlayerMovement : MonoBehaviour
                 PlayerMovement.elapsedTime = 0;
             }
         }
+        //speler gevangen toggle 
         else if( curLoc[playNum] == 31+1 || curLoc[playNum] == 52+1)
         {
             if(playTrap[playNum] == false && roundStarted)
@@ -291,6 +297,7 @@ public class PlayerMovement : MonoBehaviour
     }   
 
     void NextPlayer()
+    // gaat naar de volgende speler 
     {
         if(playNum < playerMax)
             {
@@ -303,6 +310,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void EndRound()
+    // eindigt ronde 
     {
         startRound = true;
         NextPlayer();
@@ -371,6 +379,7 @@ public class PlayerMovement : MonoBehaviour
                     PlayerMovement.elapsedTime = 0;
                     doneEvent = false;
                     someSkip = false;
+                    //kijkt of de speler getrapped is 
                     foreach(bool i in playTrap)
                     {
                         if(i){
@@ -383,7 +392,7 @@ public class PlayerMovement : MonoBehaviour
                             someSkip = true;
                         }
                     }
-                    
+                   //als je over een gevangen speler springt dan komt de gavangen speler weer los  
                     for(int i = 0; i<=playerMax; i++)
                     {
                         if(someTrapped && prevLoc[playNum]<playTrapLoc[i] && playTrapLoc[i]<curLoc[playNum])

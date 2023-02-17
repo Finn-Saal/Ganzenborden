@@ -16,13 +16,13 @@ public class SettingsMenu : MonoBehaviour
         //Debug.Log(players + " SM");
 
     }
-
+//pakt volume van slider 
     public void SetVolume(float volume)
     {
         PlayerPrefs.SetFloat("volume", volume);
         AudioListener.volume = PlayerPrefs.GetFloat("volume");
     }
-
+//past het volume aan 
     public void SetValue()
     {
         volumeSlider.value = PlayerPrefs.GetFloat("volume");

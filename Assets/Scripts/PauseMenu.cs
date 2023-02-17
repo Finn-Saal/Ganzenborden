@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    //define all variables 
     public static bool gamePause = false;
     public GameObject pauseMenuUI;
     public GameObject overlay;
@@ -27,7 +28,7 @@ public class PauseMenu : MonoBehaviour
 
         }
     }
-
+//zorgt dat je door kan gaan als je op resume klikt 
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
@@ -35,7 +36,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         gamePause = false;
     }
-
+//zorgt dat het spel op pauze komt te staan  
     void Pause()
     {
         pauseMenuUI.SetActive(true);
@@ -44,7 +45,7 @@ public class PauseMenu : MonoBehaviour
         gamePause = true;
         volumeSlider.value = PlayerPrefs.GetFloat("volume");
     }
-
+//laad het menu 
     public void LoadMenu()
     {
         Resume();
@@ -52,7 +53,7 @@ public class PauseMenu : MonoBehaviour
         DiceScript.throwReady = true;
         SceneManager.LoadScene("Menu");
     }
-
+// zorgt dat je kan stoppen 
     public void QuitGame()
     {
         Application.Quit();

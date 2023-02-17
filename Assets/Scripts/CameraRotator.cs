@@ -19,6 +19,7 @@ public class CameraRotator : MonoBehaviour
     }
 
     void RotateHorizontal()
+    //zorgt dat camera horizontal rond speler draait 
     {
         transform.RotateAround(GameObject.Find(PlayerMovement.playNum.ToString()).transform.position, Vector3.up, -((float)1.9 * (float)DiceNumberTextScript.diceNumber * Time.deltaTime));
     }

@@ -14,8 +14,9 @@ public class DiceCheckZoneScript : MonoBehaviour {
 
 	void OnTriggerStay(Collider col)
 	{
-		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
+		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f) //kijkt of the dobbelsteen stil staat 
 		{
+			//defines the number on the 
 			switch (col.gameObject.name) {
 			case "Side1":
 				DiceNumberTextScript.diceNumber = 6;
