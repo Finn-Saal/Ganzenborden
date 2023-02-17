@@ -7,7 +7,7 @@ using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 { 
-    public const int startPos = 20;
+    public const int startPos = 1;
     public static int playNum = 0; //defines the player that rolls dice starting with player 0
     public GameObject board;
     public GameObject effects;    
