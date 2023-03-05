@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiceScript : MonoBehaviour {
 
-	static Rigidbody rb;
+	public static Rigidbody rb;
 	public static Vector3 diceVelocity;
 	public static bool throwReady = true;
 	public static bool spacePressed = false;
