@@ -7,7 +7,7 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	public GameObject dice;
 	Vector3 diceVelocity;
 	public static bool diceStat = false;	//check if dice has stopped rolling in the current round
-	bool MyFourthAnswer(bool a, bool b, bool c)
+	bool BoolCheck(bool a, bool b, bool c)
 	{
 	return (a != b) || (b != c);
 	}
@@ -22,9 +22,9 @@ public class DiceCheckZoneScript : MonoBehaviour {
 	{
 		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f) //kijkt of the dobbelsteen stil staat 
 		{
-			//Debug.Log(MyFourthAnswer(dice.transform.localRotation.eulerAngles.x % 90 <= 0.001, dice.transform.localRotation.eulerAngles.y % 90 <= 0.001, dice.transform.localRotation.eulerAngles.z % 90 <= 0.001));
+			//Debug.Log(BoolCheck(dice.transform.localRotation.eulerAngles.x % 90 <= 0.001, dice.transform.localRotation.eulerAngles.y % 90 <= 0.001, dice.transform.localRotation.eulerAngles.z % 90 <= 0.001));
 
-			if(MyFourthAnswer(dice.transform.localRotation.eulerAngles.x % 90 <= 0.001, dice.transform.localRotation.eulerAngles.y % 90 <= 0.001, dice.transform.localRotation.eulerAngles.z % 90 <= 0.001)){
+			if(BoolCheck(dice.transform.localRotation.eulerAngles.x % 90 <= 0.001, dice.transform.localRotation.eulerAngles.y % 90 <= 0.001, dice.transform.localRotation.eulerAngles.z % 90 <= 0.001)){
 
 			
 				//defines the number on the 
